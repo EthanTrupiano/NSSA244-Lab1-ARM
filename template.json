@@ -188,8 +188,6 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_WEB1_name'), '_disk1_76e3b9adb35b425eac61a9c236191730'))]"
-                        },
                         "deleteOption": "Delete"
                     },
                     "dataDisks": [
