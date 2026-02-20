@@ -267,8 +267,85 @@
                             "properties": {
                                 "deleteOption": "Detach"
                             }
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2024-11-01",
+            "name": "[parameters('virtualMachines_WEB2_name')]",
+            "location": "westus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_web1607_z2_name'))]"
+            ],
+            "zones": [
+                "2"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v3"
+                },
+                "additionalCapabilities": {
+                    "hibernationEnabled": false
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "canonical",
+                        "offer": "ubuntu-24_04-lts",
+                        "sku": "server",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachines_WEB2_name'), '_disk1_76e3b9adb35b425eac61a9c236191730')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            
                         },
-                         {
+                        "deleteOption": "Delete"
+                    },
+                    "diskControllerType": "SCSI"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_WEB2_name')]",
+                    "adminUsername": "azureuser",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/azureuser/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9Ct6Fan0ogfu+MhDpTufp/smVlxkCcA9HibKmnjwlrl1QciWZXwM6Efs5Bqe8mbTmblKIEijf72SfZqvOPlWG2PPzhcoCsDcSQqmYBP+ujXTt+J2FZQxYhDyC2f6/o6Pjki9aOWaJSfHILcY6AaR9lDHZpEhVrRTy0D2xGDvJyEMHi4p+za/Renj6yKQTmBVlsk46OE6czPdZdup0x2Db5PMGL3D5esXJ8wmQwcqx2K/x+C6MILjMVitLWEXyn3+pNfY9Wq9KDgF7VjeRgb1J6fRmma2qgPJNRiVmCIKkYljxuLd2bP/A0GRB2jhqIAc3F0AbQ73vPmxrDFdzHrsktWud2f0oGZZan/k9NKA40ITAPl9Ca+GjV9WRHsWNxYnb7r8nCGKrink4b8bHqpcO0E06wRJICtBQYRX62Xq9LJdziPbVElP9ND7xUAeX2R1bzPDoGGlP/FA/w93usG0UjDksOQHnO9n4rymv/5GdY3twPdK6jcBpgN0w951eFLU= generated-by-azure"
+                                }
+                            ]
+                        },
+                        "provisionVMAgent": true,
+                        "patchSettings": {
+                            "patchMode": "ImageDefault",
+                            "assessmentMode": "ImageDefault"
+                        }
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "securityProfile": {
+                    "uefiSettings": {
+                        "secureBootEnabled": true,
+                        "vTpmEnabled": true
+                    },
+                    "securityType": "TrustedLaunch"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_web1607_z2_name'))]",
                             "properties": {
                                 "deleteOption": "Detach"
@@ -377,7 +454,6 @@
                         "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_web1607_z3_name')), '/ipConfigurations/ipconfig1')]",
                         "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
                         "properties": {
-                            "privateIPAddress": "10.0.1.4",
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_WEB1_ip_name'))]",
