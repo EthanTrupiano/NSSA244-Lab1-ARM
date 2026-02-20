@@ -195,7 +195,6 @@
                     "dataDisks": [
                         {
                             "lun": 0,
-                            "name":,
                             "createOption": "Attach",
                             "caching": "ReadWrite",
                             "writeAcceleratorEnabled": false,
