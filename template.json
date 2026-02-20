@@ -188,17 +188,18 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
+                            
+                        },
                         "deleteOption": "Delete"
                     },
                     "dataDisks": [
                         {
                             "lun": 0,
-                            "name": "WEB-DATA1",
+                            "name":,
                             "createOption": "Attach",
                             "caching": "ReadWrite",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
-                                "id": "[resourceId('Microsoft.Compute/disks', 'web-data1')]"
                             },
                             "deleteOption": "Detach",
                             "toBeDetached": false
