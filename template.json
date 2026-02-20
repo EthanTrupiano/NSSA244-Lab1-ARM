@@ -214,7 +214,7 @@
                         }
                     },
                     "secrets": [],
-                    "allowExtensionOperations": true,
+                    "allowExtensionOperations": true
                 },
                 "securityProfile": {
                     "uefiSettings": {
