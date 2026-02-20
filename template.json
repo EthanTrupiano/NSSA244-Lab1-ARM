@@ -27,7 +27,7 @@
             "type": "String"
         },
         "publicIPAddresses_LOADBAL_ip_name": {
-            "defaultValue": "WEB2-ip",
+            "defaultValue": "LOADBAL-ip",
             "type": "String"
         },
         "virtualNetworks_VNET_LAB1_name": {
