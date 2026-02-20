@@ -26,6 +26,10 @@
             "defaultValue": "WEB2-ip",
             "type": "String"
         },
+        "publicIPAddresses_LOADBAL_ip_name": {
+            "defaultValue": "WEB2-ip",
+            "type": "String"
+        },
         "virtualNetworks_VNET_LAB1_name": {
             "defaultValue": "VNET-LAB1",
             "type": "String"
@@ -103,6 +107,70 @@
             }
         },
         {
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2024-07-01",
+            "name": "LB-WEB",
+            "location": "westus3",
+            "sku": {
+            "name": "Standard",
+            "tier": "Regional"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_LOADBAL_ip_name'))]"
+        ],
+            "properties": {
+
+            "backendAddressPools": [
+            {
+                "name": "BackendPool"
+            }
+        ],
+            "frontendIPConfigurations": [
+            {
+                "name": "LoadBalancerFrontend",
+                "properties": {
+                    "publicIPAddress": {
+                        "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_LOADBAL_ip_name'))]"
+                    }
+                }
+            }
+        ],
+        "probes": [
+            {
+                "name": "HttpHealthProbe",
+                "properties": {
+                    "protocol": "Http",
+                    "port": 80,
+                    "requestPath": "/",
+                    "intervalInSeconds": 15,
+                    "numberOfProbes": 2
+                }
+            }
+        ],
+        "loadBalancingRules": [
+            {
+                "name": "WebRule80",
+                "properties": {
+                    "frontendIPConfiguration": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-WEB'), '/frontendIPConfigurations/LoadBalancerFrontend')]"
+                    },
+                    "backendAddressPool": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-WEB'), '/backendAddressPools/WebBackendPool')]"
+                    },
+                    "probe": {
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'LB-WEB'), '/probes/HttpHealthProbe')]"
+                    },
+                    "protocol": "Tcp",
+                    "frontendPort": 80,
+                    "backendPort": 80,
+                    "idleTimeoutInMinutes": 4,
+                    "enableFloatingIP": false
+                }
+            }
+        ]
+    }
+    },
+        {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2024-07-01",
             "name": "[parameters('publicIPAddresses_WEB1_ip_name')]",
@@ -134,7 +202,29 @@
                 "tier": "Regional"
             },
             "zones": [
-                "2"
+                "1"
+            ],
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": [],
+                "ddosSettings": {
+                    "protectionMode": "VirtualNetworkInherited"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2024-07-01",
+            "name": "[parameters('publicIPAddresses_LOADBAL_ip_name')]",
+            "location": "westus3",
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            },
+            "zones": [
+                "1"
             ],
             "properties": {
                 "publicIPAddressVersion": "IPv4",
@@ -286,7 +376,7 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_web1607_z2_name'))]"
             ],
             "zones": [
-                "2"
+                "1"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -464,6 +554,11 @@
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VNET_LAB1_name'), 'SUBNET-WEB')]"
                             },
+                             "loadBalancersBackendAddress": [
+                                {
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPool', 'LB-WEB', 'BackendPool')]"
+                                }
+                            ],
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
                         }
@@ -511,8 +606,14 @@
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VNET_LAB1_name'), 'SUBNET-WEB')]"
                             },
+                            "loadBalancersBackendAddress": [
+                                {
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPool', 'LB-WEB', 'BackendPool')]"
+                                }
+                            ],
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
+                            
                         }
                     }
                 ],
@@ -532,3 +633,7 @@
         }
     ]
 }
+
+
+
+
