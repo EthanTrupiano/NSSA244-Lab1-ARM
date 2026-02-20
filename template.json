@@ -216,7 +216,7 @@
                     "secrets": [],
                     "allowExtensionOperations": true,
                     "requireGuestProvisionSignal": true
-                },F
+                },
                 "securityProfile": {
                     "uefiSettings": {
                         "secureBootEnabled": true,
