@@ -6,12 +6,24 @@
             "defaultValue": "WEB1",
             "type": "String"
         },
+        "virtualMachines_WEB1_name": {
+            "defaultValue": "WEB2",
+            "type": "String"
+        },
         "sshPublicKeys_WEB1_key_name": {
             "defaultValue": "WEB1_key",
             "type": "String"
         },
+        "sshPublicKeys_WEB2_key_name": {
+            "defaultValue": "WEB2_key",
+            "type": "String"
+        },
         "publicIPAddresses_WEB1_ip_name": {
             "defaultValue": "WEB1-ip",
+            "type": "String"
+        },
+        "publicIPAddresses_WEB2_ip_name": {
+            "defaultValue": "WEB2-ip",
             "type": "String"
         },
         "virtualNetworks_VNET_LAB1_name": {
@@ -20,6 +32,10 @@
         },
         "networkInterfaces_web1607_z3_name": {
             "defaultValue": "web1607_z3",
+            "type": "String"
+        },
+        "networkInterfaces_web1607_z2_name": {
+            "defaultValue": "web1607_z2",
             "type": "String"
         },
         "networkSecurityGroups_NSG_WEB_name": {
@@ -99,7 +115,28 @@
                 "3"
             ],
             "properties": {
-                "ipAddress": "20.57.131.102",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": [],
+                "ddosSettings": {
+                    "protectionMode": "VirtualNetworkInherited"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2024-07-01",
+            "name": "[parameters('publicIPAddresses_WEB2_ip_name')]",
+            "location": "westus2",
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            },
+            "zones": [
+                "2"
+            ],
+            "properties": {
                 "publicIPAddressVersion": "IPv4",
                 "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
