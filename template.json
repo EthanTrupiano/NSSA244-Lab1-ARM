@@ -122,7 +122,7 @@
 
             "backendAddressPools": [
             {
-                "name": "BackendPool"
+                "name": "WebBackendPool"
             }
         ],
             "frontendIPConfigurations": [
@@ -554,9 +554,9 @@
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VNET_LAB1_name'), 'SUBNET-WEB')]"
                             },
-                             "loadBalancersBackendAddress": [
+                             "loadBalancerBackendAddressPools": [
                                 {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPool', 'LB-WEB', 'BackendPool')]"
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', 'LB-WEB', 'WebBackendPool')]"
                                 }
                             ],
                             "primary": true,
@@ -606,9 +606,9 @@
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VNET_LAB1_name'), 'SUBNET-WEB')]"
                             },
-                            "loadBalancersBackendAddress": [
+                            "loadBalancerBackendAddressPools": [
                                 {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPool', 'LB-WEB', 'BackendPool')]"
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', 'LB-WEB', 'WebBackendPool')]"
                                 }
                             ],
                             "primary": true,
