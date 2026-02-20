@@ -192,18 +192,6 @@
                         },
                         "deleteOption": "Delete"
                     },
-                    "dataDisks": [
-                        {
-                            "lun": 0,
-                            "createOption": "Attach",
-                            "caching": "ReadWrite",
-                            "writeAcceleratorEnabled": false,
-                            "managedDisk": {
-                            },
-                            "deleteOption": "Detach",
-                            "toBeDetached": false
-                        }
-                    ],
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
@@ -228,7 +216,7 @@
                     "secrets": [],
                     "allowExtensionOperations": true,
                     "requireGuestProvisionSignal": true
-                },
+                },F
                 "securityProfile": {
                     "uefiSettings": {
                         "secureBootEnabled": true,
